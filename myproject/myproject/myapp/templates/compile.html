@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Compile and execute</title>
+    </head>
+
+    <body>
+             {% csrf_token %}
+        <!-- List of uploaded documents -->
+        {% if data %}
+				{% for item in data %}
+				   {% if item.p_status == '0' %}
+				       <h3 style="color: green;">status_code: {{ item.p_status}}</h3>
+                   {% else %}
+                   	   <h3 style="color: red;">status_code: {{ item.p_status}}</h3>
+                   	   <br>
+                   	   <h3 style="color: red;">stderr: {{ item.stderr}}</h3>
+                   	   <br>
+                   	   <h3 style="color: red;">stdout: {{ item.stdout}}</h3>
+				   {% endif %}
+				{% endfor %}
+        {% elif error_data %}
+	       <h3 style="color: red;">status_code: {{ error_data.p_status}}</h3>
+       	   <br>
+       	   <h3 style="color: red;">stderr: {{ error_data.stderr}}</h3>
+       	   <br>
+       	   <h3 style="color: red;">stdout: {{ error_data.stdout}}</h3>
+        {%  elif exedata %}
+        {%  for item in exedata  %}
+              <h3 style="color: green;">status_code: {{ item.p_status}}</h3>
+              <br>
+              <h3 style="color: green;">stderr: {{ item.stderr}}</h3>
+              <br>
+              <h3 style="color: green;">stdout: {{ item.stdout}}</h3>
+        {% endfor %}  
+        {% elif objfile_error %} 
+               <h3 style="color: red;"> no object file found </h3>   
+        {% endif %}
+    </body>
+</html>
